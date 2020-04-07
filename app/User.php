@@ -47,8 +47,20 @@ class User extends Authenticatable
         return $this->tweets->reverse();
     }
 
-    public function getAvatarAttribute($size = 40)
+    public function getAvatarAttribute()
     {
-        return "https://i.pravatar.cc/{$size}?u={$this->email}";
+        return "https://i.pravatar.cc/50?u={$this->email}";
+    }
+
+    public function follow(User $user)
+    {
+        return $this->follows()->save($user);
+    }
+
+    public function follows()
+    {
+        // Laravel is looking for a convetion and thinks the table is called user_user but we rewrite that in the second argument also adding both of the foreign keys
+        
+        return $this->belongsToMany(User::class, 'follows', 'user_id', 'following_user_id');
     }
 }
