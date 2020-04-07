@@ -36,4 +36,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function tweets()
+    {
+        return $this->hasMany(Tweet::class);
+    }
+
+    public function timeline()
+    {
+        return $this->tweets->reverse();
+    }
+
+    public function getAvatarAttribute($size = 40)
+    {
+        return "https://i.pravatar.cc/{$size}?u={$this->email}";
+    }
 }
