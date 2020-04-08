@@ -44,7 +44,14 @@ class User extends Authenticatable
 
     public function timeline()
     {
-        return $this->tweets->reverse();
+        // Include all of user's tweets
+        // as well as the tweets of everyone
+        // they follow in descending order by date
+        $following = $this->follows()->pluck('id');
+
+        return Tweet::whereIn('user_id', $following)
+        ->orWhere('user_id', $this->id)
+        ->latest()->get();
     }
 
     public function getAvatarAttribute()
