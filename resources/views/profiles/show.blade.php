@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<x-app>
     <header class="mb-6 relative">
         <div class="bg-blue-500 rounded-lg" style="height: 225px; width: 100% mb-2">
         </div>
@@ -35,4 +33,4 @@
     @include('_timeline', [
         'tweets' => $user->tweets
     ])
-@endsection
+</x-app>
